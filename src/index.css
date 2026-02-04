@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-dark-border;
+  }
+  
+  body {
+    @apply bg-dark-bg text-gray-200 font-sans antialiased;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-card;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-dark-border rounded;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-600;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-dark-hover hover:bg-dark-border text-gray-300 font-medium px-4 py-2 rounded transition-colors;
+  }
+
+  .input-field {
+    @apply w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  }
+
+  .textarea-field {
+    @apply w-full bg-dark-card border border-dark-border rounded px-3 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none;
+  }
+
+  .card {
+    @apply bg-dark-card rounded-lg border border-dark-border;
+  }
+
+  .tab {
+    @apply px-4 py-2 rounded-t-lg cursor-pointer transition-colors flex items-center gap-2 relative;
+  }
+
+  .tab-active {
+    @apply bg-dark-card border-l border-t border-r border-dark-border;
+  }
+
+  .tab-inactive {
+    @apply bg-dark-hover hover:bg-dark-card;
+  }
+}
