@@ -13,6 +13,13 @@ export interface APISettings {
   model: string;
 }
 
+export interface PDFSettings {
+  primaryColor: string;
+  fontFamily: 'helvetica' | 'arial' | 'calibri' | 'times' | 'georgia' | 'garamond' | 'courier' | 'roboto' | 'opensans' | 'lato';
+  theme: 'professional' | 'modern' | 'minimal' | 'creative';
+  fontSize: 'small' | 'medium' | 'large';
+}
+
 export interface HistoryItem {
   id: string;
   timestamp: number;

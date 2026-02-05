@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { FileText, Keyboard, TestTube, Tag, History, Moon } from 'lucide-react';
+import { FileText, Keyboard, Tag, History, Moon, Settings } from 'lucide-react';
 import TabManager from './components/TabManager';
 import ResumeTailor from './components/ResumeTailor';
 import SettingsModal from './components/SettingsModal';
 import ShortcutsModal from './components/ShortcutsModal';
 import HistoryModal from './components/HistoryModal';
-import { Tab, APISettings, HistoryItem } from './types';
+import { Tab, APISettings, PDFSettings, HistoryItem } from './types';
 import { tailorResume as tailorResumeAPI } from './utils/api';
 
 const DEFAULT_RESUME = `Full Name : Donald Adkins
@@ -147,15 +147,25 @@ function App() {
     apiUrl: 'https://api.deepseek.com',
     model: 'deepseek-chat',
   });
+  const [pdfSettings, setPdfSettings] = useState<PDFSettings>({
+    primaryColor: '#654321',
+    fontFamily: 'calibri',
+    theme: 'professional',
+    fontSize: 'medium',
+  });
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
   // Load saved data from localStorage
   useEffect(() => {
-    const savedSettings = localStorage.getItem('apiSettings');
+    const savedApiSettings = localStorage.getItem('apiSettings');
+    const savedPdfSettings = localStorage.getItem('pdfSettings');
     const savedHistory = localStorage.getItem('history');
     
-    if (savedSettings) {
-      setApiSettings(JSON.parse(savedSettings));
+    if (savedApiSettings) {
+      setApiSettings(JSON.parse(savedApiSettings));
+    }
+    if (savedPdfSettings) {
+      setPdfSettings(JSON.parse(savedPdfSettings));
     }
     if (savedHistory) {
       setHistory(JSON.parse(savedHistory));
@@ -166,6 +176,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem('apiSettings', JSON.stringify(apiSettings));
   }, [apiSettings]);
+
+  useEffect(() => {
+    localStorage.setItem('pdfSettings', JSON.stringify(pdfSettings));
+  }, [pdfSettings]);
 
   // Save history to localStorage
   useEffect(() => {
@@ -301,10 +315,16 @@ function App() {
     const event = new CustomEvent('download-pdf', { 
       detail: { 
         content: tab.tailoredResume, 
-        filename: `${tab.name}_Resume.pdf` 
+        filename: `${tab.name}_Resume.pdf`,
+        settings: pdfSettings
       } 
     });
     window.dispatchEvent(event);
+  }, [pdfSettings]);
+
+  const handleSaveSettings = useCallback((newApiSettings: APISettings, newPdfSettings: PDFSettings) => {
+    setApiSettings(newApiSettings);
+    setPdfSettings(newPdfSettings);
   }, []);
 
   const activeTab = tabs.find(t => t.id === activeTabId) || tabs[0];
@@ -330,13 +350,6 @@ function App() {
           <button
             className="flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-hover rounded transition-colors"
           >
-            <TestTube className="w-4 h-4" />
-            <span className="text-sm">Prompt Test</span>
-          </button>
-          
-          <button
-            className="flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-hover rounded transition-colors"
-          >
             <Tag className="w-4 h-4" />
             <span className="text-sm">Keywords</span>
           </button>
@@ -352,8 +365,12 @@ function App() {
             </span>
           </button>
 
-          <button className="p-2 text-gray-300 hover:text-white hover:bg-dark-hover rounded transition-colors">
-            <Moon className="w-5 h-5" />
+          <button 
+            onClick={() => setShowSettings(true)}
+            className="flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-hover rounded transition-colors"
+          >
+            <Settings className="w-4 h-4" />
+            <span className="text-sm">Settings</span>
           </button>
         </div>
       </header>
@@ -416,8 +433,9 @@ function App() {
       {/* Modals */}
       {showSettings && (
         <SettingsModal
-          settings={apiSettings}
-          onSave={setApiSettings}
+          apiSettings={apiSettings}
+          pdfSettings={pdfSettings}
+          onSave={handleSaveSettings}
           onClose={() => setShowSettings(false)}
         />
       )}

@@ -1,8 +1,10 @@
 import jsPDF from 'jspdf';
+import { PDFSettings } from '../types';
 
 export interface PDFOptions {
   content: string;
   filename: string;
+  settings?: PDFSettings;
 }
 
 interface ParsedContent {
@@ -16,12 +18,22 @@ interface ParsedContent {
   }>;
 }
 
-export function generateResumePDF({ content, filename }: PDFOptions) {
+export function generateResumePDF({ content, filename, settings }: PDFOptions) {
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
     format: 'a4',
   });
+
+  // Default settings
+  const defaultSettings: PDFSettings = {
+    primaryColor: '#654321',
+    fontFamily: 'helvetica',
+    theme: 'professional',
+    fontSize: 'medium',
+  };
+  
+  const pdfSettings = settings || defaultSettings;
 
   // Page settings
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -30,12 +42,98 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
   const contentWidth = pageWidth - 2 * margin;
   let yPosition = margin;
 
-  // EnhanceCV-inspired color scheme
-  const primaryColor: [number, number, number] = [101, 67, 33]; // Professional brown
+  // Helper to convert hex color to RGB
+  const hexToRgb = (hex: string): [number, number, number] => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? [
+          parseInt(result[1], 16),
+          parseInt(result[2], 16),
+          parseInt(result[3], 16),
+        ]
+      : [101, 67, 33]; // Default brown
+  };
+
+  // Apply color settings
+  const primaryColor = hexToRgb(pdfSettings.primaryColor);
   const accentColor: [number, number, number] = [52, 73, 94]; // Dark slate
   const textColor: [number, number, number] = [44, 62, 80]; // Dark text
   const lightTextColor: [number, number, number] = [127, 140, 141]; // Gray text
-  const fontFamily = 'arial';
+  
+  // Apply font family - map to jsPDF font names
+  // jsPDF supports: helvetica (sans-serif), times (serif), courier (monospace)
+  const fontFamilyMap: Record<string, string> = {
+    // Sans-serif fonts
+    helvetica: 'helvetica',
+    arial: 'helvetica',       // Arial maps to Helvetica (nearly identical)
+    calibri: 'helvetica',     // Calibri maps to Helvetica (clean sans-serif)
+    roboto: 'helvetica',      // Roboto maps to Helvetica (modern sans-serif)
+    opensans: 'helvetica',    // Open Sans maps to Helvetica (clean sans-serif)
+    lato: 'helvetica',        // Lato maps to Helvetica (professional sans-serif)
+    
+    // Serif fonts
+    times: 'times',
+    georgia: 'times',         // Georgia maps to Times (elegant serif)
+    garamond: 'times',        // Garamond maps to Times (classic serif)
+    
+    // Monospace fonts
+    courier: 'courier',
+  };
+  const fontFamily = fontFamilyMap[pdfSettings.fontFamily] || 'helvetica';
+  
+  // Apply font size adjustments
+  const fontSizeMap = {
+    small: { base: 9, heading: 22, subheading: 11, body: 9 },
+    medium: { base: 10, heading: 24, subheading: 12, body: 10 },
+    large: { base: 11, heading: 26, subheading: 13, body: 11 },
+  };
+  const fontSizes = fontSizeMap[pdfSettings.fontSize];
+
+  // Theme configurations
+  const themeConfig = {
+    professional: {
+      nameAlign: 'right',
+      nameCase: 'upper',
+      contactAlign: 'right',
+      sectionUnderline: true,
+      sectionCase: 'upper',
+      dividerLine: true,
+      dividerStyle: 'full',
+      headerSpacing: 8,
+    },
+    modern: {
+      nameAlign: 'center',
+      nameCase: 'normal',
+      contactAlign: 'center',
+      sectionUnderline: false,
+      sectionCase: 'normal',
+      dividerLine: true,
+      dividerStyle: 'short',
+      headerSpacing: 10,
+    },
+    minimal: {
+      nameAlign: 'left',
+      nameCase: 'normal',
+      contactAlign: 'left',
+      sectionUnderline: false,
+      sectionCase: 'upper',
+      dividerLine: false,
+      dividerStyle: 'none',
+      headerSpacing: 6,
+    },
+    creative: {
+      nameAlign: 'left',
+      nameCase: 'upper',
+      contactAlign: 'left',
+      sectionUnderline: true,
+      sectionCase: 'upper',
+      dividerLine: true,
+      dividerStyle: 'thick',
+      headerSpacing: 12,
+    },
+  };
+
+  const theme = themeConfig[pdfSettings.theme];
   // Helper function to check if we need a new page
   const checkNewPage = (neededSpace: number) => {
     if (yPosition + neededSpace > pageHeight - 15) { // Reduced bottom padding (was margin + 10)
@@ -269,17 +367,27 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
     // Add more padding above name
     yPosition += 6;
 
-    // Name - RIGHT-ALIGNED in primary color (brown)
-    doc.setFontSize(24);
+    // Name - alignment and case based on theme
+    doc.setFontSize(fontSizes.heading);
     doc.setFont(fontFamily, 'bold');
     doc.setTextColor(...primaryColor);
-    const nameWidth = doc.getTextWidth(parsed.name.toUpperCase());
-    doc.text(parsed.name.toUpperCase(), pageWidth - margin - nameWidth, yPosition);
-    yPosition += 8;
+    
+    const displayName = theme.nameCase === 'upper' ? parsed.name.toUpperCase() : parsed.name;
+    const nameWidth = doc.getTextWidth(displayName);
+    
+    let nameX = margin;
+    if (theme.nameAlign === 'right') {
+      nameX = pageWidth - margin - nameWidth;
+    } else if (theme.nameAlign === 'center') {
+      nameX = (pageWidth - nameWidth) / 2;
+    }
+    
+    doc.text(displayName, nameX, yPosition);
+    yPosition += theme.headerSpacing;
 
     // Contact info - RIGHT-ALIGNED horizontally
     if (parsed.contactInfo.length > 0) {
-      doc.setFontSize(9);
+      doc.setFontSize(fontSizes.base - 1);
       doc.setFont(fontFamily, 'normal');
       doc.setTextColor(...textColor);
 
@@ -318,7 +426,7 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
         }
       }
 
-      // Create contact line with bullet separators - right-aligned
+      // Create contact line with bullet separators - alignment based on theme
       const separator = ' • ';
       let contactText = '';
       const links: Array<{ text: string, url: string, x: number, y: number, width: number }> = [];
@@ -328,9 +436,14 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
         contactText += cleanedParts[i].text;
       }
 
-      // Right-align the contact line
+      // Align the contact line based on theme
       const contactWidth = doc.getTextWidth(contactText);
-      const startX = pageWidth - margin - contactWidth;
+      let startX = margin;
+      if (theme.contactAlign === 'right') {
+        startX = pageWidth - margin - contactWidth;
+      } else if (theme.contactAlign === 'center') {
+        startX = (pageWidth - contactWidth) / 2;
+      }
 
       // Render text and track link positions
       let currentX = startX;
@@ -365,19 +478,48 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
       yPosition += 6;
     }
 
-    // Divider line
-    doc.setDrawColor(...textColor);
-    doc.setLineWidth(0.5);
-    doc.line(margin, yPosition, pageWidth - margin, yPosition);
+    // Divider line based on theme
+    if (theme.dividerLine) {
+      doc.setDrawColor(...primaryColor);
+      
+      if (theme.dividerStyle === 'thick') {
+        doc.setLineWidth(1.2);
+        doc.line(margin, yPosition, pageWidth - margin, yPosition);
+      } else if (theme.dividerStyle === 'short') {
+        doc.setLineWidth(0.5);
+        const lineWidth = 60;
+        const startX = (pageWidth - lineWidth) / 2;
+        doc.line(startX, yPosition, startX + lineWidth, yPosition);
+      } else {
+        doc.setLineWidth(0.5);
+        doc.line(margin, yPosition, pageWidth - margin, yPosition);
+      }
+    }
+    
     yPosition += 8;
   }
 
-  // Professional title - LEFT-ALIGNED in black
+  // Professional title - alignment and styling based on theme
   if (parsed.title) {
-    doc.setFontSize(14);
-    doc.setFont(fontFamily, 'bold');
-    doc.setTextColor(0, 0, 0); // Black
-    doc.text(parsed.title, margin, yPosition);
+    doc.setFontSize(fontSizes.subheading + 2);
+    doc.setFont(fontFamily, pdfSettings.theme === 'creative' ? 'bold' : 'bold');
+    
+    // Color based on theme
+    if (pdfSettings.theme === 'creative') {
+      doc.setTextColor(...primaryColor);
+    } else if (pdfSettings.theme === 'modern') {
+      doc.setTextColor(...accentColor);
+    } else {
+      doc.setTextColor(0, 0, 0); // Black
+    }
+    
+    let titleX = margin;
+    if (theme.nameAlign === 'center') {
+      const titleWidth = doc.getTextWidth(parsed.title);
+      titleX = (pageWidth - titleWidth) / 2;
+    }
+    
+    doc.text(parsed.title, titleX, yPosition);
     yPosition += 10;
   }
 
@@ -394,17 +536,23 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
     // Section title
     if (section.title) {
       const cleanTitle = stripMarkdown(section.title); // Extra cleanup
-      doc.setFontSize(12);
+      const displayTitle = theme.sectionCase === 'upper' ? cleanTitle.toUpperCase() : cleanTitle;
+      
+      doc.setFontSize(fontSizes.subheading);
       doc.setFont(fontFamily, 'bold');
       doc.setTextColor(...primaryColor);
-      doc.text(cleanTitle.toUpperCase(), margin, yPosition);
+      doc.text(displayTitle, margin, yPosition);
 
-      // Underline
-      const titleWidth = doc.getTextWidth(cleanTitle.toUpperCase());
+      // Underline based on theme
+      const titleWidth = doc.getTextWidth(displayTitle);
       yPosition += 1.5;
-      doc.setDrawColor(...primaryColor);
-      doc.setLineWidth(0.4);
-      doc.line(margin, yPosition, margin + titleWidth, yPosition);
+      
+      if (theme.sectionUnderline) {
+        doc.setDrawColor(...primaryColor);
+        doc.setLineWidth(pdfSettings.theme === 'creative' ? 0.8 : 0.4);
+        doc.line(margin, yPosition, margin + titleWidth, yPosition);
+      }
+      
       yPosition += 6;
     }
 
@@ -435,7 +583,7 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
         !trimmed.startsWith('• ') && !trimmed.startsWith('*   ') && !isSkillsCategory(trimmed)) {
         // Reset font completely
         doc.setFont(fontFamily, 'normal');
-        doc.setFontSize(10);
+        doc.setFontSize(fontSizes.body);
         doc.setTextColor(...textColor);
 
         // Keep bold markers for rendering
@@ -521,7 +669,7 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
         if (match) {
           const [, category, skills] = match;
 
-          doc.setFontSize(10);
+          doc.setFontSize(fontSizes.body);
           doc.setTextColor(...textColor);
 
           // Category label (bold)
@@ -575,13 +723,13 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
 
         if (isJobTitle) {
           yPosition += 2;
-          doc.setFontSize(10.5);
+          doc.setFontSize(fontSizes.body + 0.5);
           doc.setFont(fontFamily, 'bold');
           doc.setTextColor(...accentColor);
           doc.text(text, margin, yPosition);
           yPosition += 5;
         } else {
-          doc.setFontSize(9.5);
+          doc.setFontSize(fontSizes.body - 0.5);
           doc.setFont(fontFamily, 'bold');
           doc.setTextColor(...textColor);
           doc.text(text, margin, yPosition);
@@ -593,7 +741,7 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
       // Company | Date or University Name or plain date line
       if (trimmed.match(/^[^-•*].+\|\s*.+$/)) {
         const parts = trimmed.split('|').map(p => stripMarkdown(p));
-        doc.setFontSize(9);
+        doc.setFontSize(fontSizes.base - 1);
         doc.setTextColor(...lightTextColor);
         doc.setFont(fontFamily, 'italic');
 
@@ -610,7 +758,7 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
       // Certification line (e.g., "AWS Solutions Architect – 07/2022")
       if (!trimmed.startsWith('**') && !trimmed.startsWith('#') &&
         trimmed.match(/^[\w\s\(\)]+\s*[–-]\s*\d{2}\/\d{4}$/)) {
-        doc.setFontSize(9);
+        doc.setFontSize(fontSizes.base - 1);
         doc.setTextColor(...textColor);
 
         const parts = trimmed.split(/\s*[–-]\s*(?=\d{2}\/\d{4}$)/);
@@ -636,7 +784,7 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
         (trimmed.match(/^\w+[\w\s]+(?:University|College|Institute|Ltd|Inc|Corp|Technologies|Systems)/i) ||
           trimmed.match(/^\d{4}\s*[-–]\s*\d{4}$/) ||
           trimmed.match(/^\d{2}\/\d{4}\s*[-–]\s*\d{2}\/\d{4}$/))) {
-        doc.setFontSize(9);
+        doc.setFontSize(fontSizes.base - 1);
         doc.setTextColor(...lightTextColor);
         doc.setFont(fontFamily, 'italic');
 
@@ -662,7 +810,7 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
           .replace(/^•\s+/, '')
           .replace(/^#{1,6}\s*/g, ''); // Remove any stray # symbols
 
-        doc.setFontSize(10);
+        doc.setFontSize(fontSizes.body);
         doc.setFont(fontFamily, 'normal');
         doc.setTextColor(...textColor);
 
@@ -701,7 +849,7 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
 
       // Regular paragraph text (for other sections like Education description, etc.)
       doc.setFont(fontFamily, 'normal');
-      doc.setFontSize(10);
+      doc.setFontSize(fontSizes.body);
       doc.setTextColor(...textColor);
 
       // Remove any stray markdown symbols - strip bold markers for reliability
@@ -742,7 +890,7 @@ export function generateResumePDF({ content, filename }: PDFOptions) {
 // Initialize PDF download listener
 if (typeof window !== 'undefined') {
   window.addEventListener('download-pdf', ((event: CustomEvent) => {
-    const { content, filename } = event.detail;
-    generateResumePDF({ content, filename });
+    const { content, filename, settings } = event.detail;
+    generateResumePDF({ content, filename, settings });
   }) as EventListener);
 }
