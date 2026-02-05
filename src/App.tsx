@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { FileText, Keyboard, Tag, History, Moon, Settings } from 'lucide-react';
+import { FileText, Keyboard, Tag, History, Settings } from 'lucide-react';
 import TabManager from './components/TabManager';
 import ResumeTailor from './components/ResumeTailor';
 import SettingsModal from './components/SettingsModal';
