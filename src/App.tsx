@@ -8,124 +8,128 @@ import HistoryModal from './components/HistoryModal';
 import { Tab, APISettings, PDFSettings, HistoryItem } from './types';
 import { tailorResume as tailorResumeAPI } from './utils/api';
 
-const DEFAULT_RESUME = `Full Name : Donald Adkins
-Born : May 1989
-Linkedin URL : https://www.linkedin.com/in/hellodonaldcode
+const DEFAULT_RESUME = `Full Name : Braylon Dunn
+Linkedin URL : https://www.linkedin.com/in/1aa3563a3
 Gmail : hellodonaldcode@outlook.com
-Phone : +1 (281) 594-7203
-Georgia Location : 2673 Starr Road Morrow, GA 30260
-Senior MLOps Engineer with 8+ years of experience specializing in architecting and building multi-tenant ML
-platforms from the ground up. Proven expertise in ML Infrastructure, DevOps, and Data Engineering, with a strong
-focus on designing scalable, secure, and cost-optimized systems for production machine learning model
-deployment. Skilled in containerization (Docker, Kubernetes), CI/CD pipelines, data quality monitoring, model drift
-detection, and implementing comprehensive observability practices. Passionate about bridging the gap between
-data science and production operations to enable independent, high-impact ML deployments.
-Skills
-MLOps & ML Infrastructure: MLOps, ML Infrastructure, Multi-tenant Architecture, Model Serving, Model
-Versioning, A/B Testing, Model Drift Detection, Data Quality Frameworks, Observability, Feature engineering,
-batch & real-time inference, retraining automation
-Cloud Platforms & Infrastructure-as-Code: AWS, GCP, Azure, Terraform, CloudFormation, Infrastructure-as-Code
-(IaC)
-Containerization & Orchestration: Docker, Kubernetes, ArgoCD (GitOps), Helm, Cloud Run, GKE
-CI/CD & DevOps: CI/CD Pipelines, Jenkins, GitHub Actions, GitOps practices
-Programming & ML Stack: Python, PyTorch, Scikit-learn, NumPy, Pandas, Java, C#, .NET, PHP
-Data & Monitoring: Data Quality Monitoring, BigQuery, SQL, data warehousing, Prometheus, Grafana, centralized
-logging, alerting
-Systems & Tools: Linux, Bash, Redis, RabbitMQ, Apache Kafka, Spring Boot
-Experience
-Machine Learning/MLOps/DevOps Engineer
-Upland Altify | 07/2022 – 12/2025
-Architected and built a foundational multi-tenant ML platform from scratch (01)to serve machine learning
-models for 5+ customer-facing products, establishing patterns for data isolation, security, and cost allocation
-across tenants.
-Designed and implemented a comprehensive CI/CD pipeline using Jenkins and GitHub Actions for automated
-model training, validation, and deployment, reducing release cycles from days to under 1 hour and enabling safe
-rollbacks.
-Engineered a multi-tenant model serving infrastructure on Kubernetes (GKE) using Docker containers, achieving
-99.9% uptime and supporting A/B testing capabilities for production deployments.
-Established a full data quality framework including validation and model drift detection on BigQuery datasets,preventing ~20% of failed retraining jobs and ensuring model reliability.
-Implemented observability and monitoring systems using Prometheus and Grafana for model performance,
-infrastructure health, and business metrics, improving incident detection time by 45%.
-Collaborated closely with data scientists to establish workfows using the Python ML stack (NumPy, Pandas,
-Scikit-learn), enabling their independent deployment of models while maintaining platform governance.
-Automated infrastructure-as-code provisioning and management for 30+ cloud resources using Terraform,
-ensuring consistency and compliance across all development and production environments.
-Optimized infrastructure costs across multiple deployments by refning Kubernetes resource requests and
-BigQuery partitioning strategies, reducing analytical query costs by 32%.
-Led the design of architectural patterns and best practices for the ML platform, documenting processes for model
-versioning, deployment, and operational runbooks.
-Bridged the gap between pilot systems and production-ready infrastructure by containerizing Python ML services
-and deploying them to scalable Cloud Run and GKE environments.
-Data Engineer / Associate DevOps Engineer
-PaperLeaf | 04/2021 – 07/2022
-Supported and scaled Kubernetes clusters hosting multi-tenant ML inference APIs, processing 6–8 million
-requests/month while ensuring customer isolation and performance.
-Built and maintained CI/CD pipelines for ML models using Jenkins and GitHub Actions, improving build reliability
-and providing clear deployment visibility for data science teams.
-Implemented infrastructure-as-code with Terraform modules to provision reusable cloud infrastructure on AWS
-and Azure, cutting environment setup time from 8 hours to 45 minutes.
-Designed observability systems with Grafana dashboards and alerting rules for model latency and error rates,
-reducing mean time to recovery (MTTR) by 38%.
-Collaborated with data scientists to productionize machine learning models built with Scikit-learn and PyTorch,
-containerizing them with Docker and deploying via Helm charts.
-Established GitOps practices using ArgoCD for declarative management of ML service deployments, enhancing
-auditability and rollback capabilities.
-Developed monitoring for data quality and pipeline health, creating foundational frameworks that informed later
-drift detection initiatives.
-Gained hands-on experience with multi-cloud production deployments on AWS (EC2, S3) and Azure (VMs,
-Storage), optimizing for cost and performance.
-Worked closely with cross-functional teams to explain architectural decisions and operational trade-offs,
-improving stakeholder alignment.
-Contributed to the design of a platform aimed at scaling ML systems from pilots to broader production
-deployment.
-Technical Support Specialist
-Toyota Boshoku America | 08/2020 – 03/2021
-Provided Tier-2/3 support for cloud-hosted data and ML platforms, maintaining 99% SLA compliance and gainingdeep exposure to production monitoring and incident response.
-Diagnosed and resolved complex production issues involving data pipelines, model inference failures on
-Kubernetes, and cloud infrastructure, resolving 85% of incidents within 24 hours.
-Coordinated with DevOps and ML engineers on root cause analysis, contributing to operational documentation
-and runbooks used by platform teams.
-Developed a foundational understanding of observability tools and data quality checks in a live production
-environment.
-Full Stack Engineer
-Zinox Technologies Ltd | 05/2014 – 01/2017
-Developed and deployed scalable microservices and applications using Java with Spring Boot and C# with .NET,
-focusing on performance and integration with messaging systems like Apache Kafka.
-Built dynamic client-side applications with ReactJS and AngularJS, employing component-based architecture and
-state management principles.
-Optimized system performance by implementing caching with Redis and asynchronous messaging with
-RabbitMQ, reducing latency by 40%.
-Utilized PHP and the Laravel framework to build server-side applications, focusing on structured development and
-deployment workfows.
-Gained extensive experience in the full software development lifecycle, from architecture to deployment and
-maintenance.
-Education
-Bachelor of Computer Science
-University of Benin | 2008 - 2013
-Certifcations
-AWS Solutions Architect – 07/2022
-Microsoft AZ-500 - 2021
-TripleByte Certifcated Triplebyte KTGSi4n
-
-When updating my resume based on a job description:
--Compare the JD and my current resume line by line.
--Fully update the overall resume to the new one that should be aligned with the JD that automatically detect and
-include any tech mentioned in the JD, much focus on the skills first from JD and the relevant dependency skills as
-much as possible
--Keep the writing senior-level, concise, and action-driven
--10–15 bullet points and 3 - 4 of quantified accomplishments or impact statements should be reflected to the every
-company experience
--Every skills from Summary and Experiences should have bold type and ensure the resume looks tailored for that
-specific role without sounding copy-pasted from the JD.
--Ensure the updated version will be scored very high to definitely pass in ATS checker here are what you need to
-consider
-❌ Generic Career Summary
-❌ Focusing on Responsibilities Instead of Achievements
-❌ Listing Skills with No Context
-❌ An Unreadable Resume
--Pls refer and follow the most top resumes that is pretty well known as via internet
--Please think and think more carefully and Always deliver the best full updated resume at the end, not just
-sections.`;
+Phone : +1 (225) 421-0403
+Georgia Location : 7558 Greenup Lane, Ethel, Louisiana 70730
+Senior Software Engineer
+Senior Software Engineer with 9+ years of experience building and scaling full-stack and cloud-native platforms across web,
+mobile, and distributed systems. I specialize in JavaScript/TypeScript (React/Next.js, Vue.js, Angular, Node.js), .NET/C#,
+and Python (Django, FastAPI) with hands-on delivery on AWS, Azure, and GCP. I’ve led migrations to microservices,
+driven AI/ML and RAG integrations with LLMs and vector databases, and optimized SQL/NoSQL systems for highthroughput, low-latency workloads. I’m comfortable owning everything from architecture decisions, DevOps/CI/CD and
+SRE/observability to frontend design systems and secure identity flows. I thrive in Agile teams, mentor engineers, and
+translate complex requirements into practical, user-focused solutions that move key business metrics.
+EDUCATION
+Western Governors University (WGU)
+Bachelor's Degree in Software Development / Computer Science • 05/2014 - 09/2017
+SKILLS
+Languages & Frameworks: Angular, Ant Design, D3.js, Java, JavaScript/TypeScript, Material UI, .NET/C#, Python (
+Django/FastAPI), React Native, React/Next.js, React Query, Redux Toolkit, Tailwind, Vue, Webpack & Vite
+Back end & APIs: ASP.NET Core (Web API + gRPC), EF Core, GraphQL, Node (Express/Nest), REST
+Data & Messaging: Azure Service Bus, design for HA/multi-region-ready data architectures, Kafka, MongoDB, MySQL,
+PostgreSQL, RabbitMQ, Redis, SQL Server
+Cloud & DevOps: AWS (ECS/EKS, CloudWatch), Azure, Docker, GCP (GKE, Pub/Sub), GitHub Actions/Jenkins,
+Kubernetes (AKS/GKE/EKS), Observability with App Insights, Prometheus, Grafana, SRE practices (SLOs, error budgets,
+incident response, runbooks), Terraform
+Security, Compliance & Identity: audit logging, familiarity with PCI DSS, ISO27001, SOC2 and operating in regulated
+enterprise environments, GDPR/CCPA, JWT, Key Vault/secret management, OAuth2/OIDC/SSO (Okta, Azure AD), OWASP
+hardening, RBAC
+AI/ML: embeddings & prompt-chaining, FAISS/pgvector, LLM integrations, RAG
+Testing & Quality: Cypress, Jest, pact-style contract tests, Playwright, Postman (+ Newman in CI), React Testing Library,
+Snyk, SonarQube, xUnit
+Ways of working: ADRs, Agile/Scrum, Code Reviews, DDD, Design Systems, Forward-deployed/customer-facing
+engineering with architecture/infra teams, Mentoring, translating between technical and non-technical stakeholdersWORK EXPERIENCE
+Bitwarden • Remote (California, United States) • 10/2024 - 07/2025
+Senior Software Engineer
+• Led delivery of security-sensitive features across React/Next.js and ASP.NET Core microservices using
+OAuth2/OIDC, JWT, and RBAC, cutting auth-related incident tickets by roughly one-third and keeping SSO
+escalations to fewer than 1–2 per quarter for enterprise customers.
+• Designed and hardened GraphQL and REST APIs used by 10+ internal and external clients, adding strict
+validation and OWASP protections that reduced externally reported API issues and made partner onboarding a sameweek activity instead of multi-week.
+• Refactored core front-end flows with Redux Toolkit, React Query, SSR/ISR, and route-level code splitting,
+lowering LCP on key dashboards from ~3s to nearly 1.5s and improving funnel completion by several percentage
+points in A/B tests.
+• Built high-throughput .NET services with gRPC, EF Core, SQL Server/PostgreSQL, Redis, and Azure Service
+Bus that reliably processed tens of thousands of messages per day, while reducing message retries and dead-letter
+volume by about 35%.
+• Introduced Vite alongside legacy Webpack in targeted apps, trimming local rebuild times from 20–30 seconds to
+under 5 seconds and shrinking production bundles by 15–20%, which noticeably improved both developer feedback
+loops and user perceived load time.
+• Standardized UI with Tailwind CSS, shared Storybook components, and selective Material UI/Ant Design usage,
+enabling teams to assemble new admin workflows in hours instead of days and cutting CSS- and layout-related bugs
+by ~20%.
+• Automated CI/CD using GitHub Actions, Docker, and AKS (Kubernetes), moving from largely manual, hour-long
+release windows to fully automated pipelines that shipped safely in under 15 minutes and supported multiple
+deployments per day.
+• Codified infra with Terraform (networking, AKS, storage, identities), reducing environment drift and cutting the
+time to spin up a new environment from multiple days of manual steps down to a few pipeline runs.
+• Deepened observability by wiring Azure Application Insights traces, metrics, and logs into Prometheus/Grafana
+dashboards and actionable alerts, lowering MTTR on critical incidents from roughly 90 minutes to about an hour.
+• Expanded automated test coverage with Jest, React Testing Library, Cypress, Playwright, Postman/Newman
+collections, and contract tests for GraphQL/REST, raising automated coverage on customer-critical journeys to
+~80%+ and significantly reducing regressions after large refactors.
+Sunnova Energy • Remote (Texas, United States) • 11/2020 - 08/2024
+Software Engineer
+• Delivered customer and partner portals using Vue.js and TypeScript backed by .NET and Node.js (Express, NestJS)
+services, consolidating three legacy UIs into a unified experience and supporting tens of thousands of monthly active
+users with improved NPS and fewer support tickets.
+• Modeled core domains with ASP.NET Core, EF Core, SQL Server, and MongoDB, introducing outbox and saga
+patterns on Kafka, RabbitMQ, and Azure Service Bus that kept integration success rates above 99% across Salesforce,
+Twilio, and SendGrid.
+• Introduced Python (Django, FastAPI) services and tooling for ETL, PDF processing, and CI/CD automation,
+eliminating several hours of manual release validation each week and shrinking lead time for backend fixes and
+enhancements.
+• Prototyped LLM-backed RAG search and support workflows with pgvector, FAISS, and prompt-chaining, enabling
+internal teams to retrieve answers across thousands of documents and reducing average handling time in pilot queues by15–20%.
+• Led a gradual migration from a monolithic app to microservices on Azure, containerizing workloads with Docker and
+orchestrating them on AKS; this, along with GitHub Actions/Jenkins pipelines and Terraform, increased successful
+production releases from 1–2 per month to several per week.
+• Tuned front-end performance using SSR, optimized asset loading, caching headers, and CDNs, adding 20+ points to
+Lighthouse performance scores on key sales flows and contributing to a 5–10% uplift in lead-to-opportunity conversion
+in marketing experiments.
+• Strengthened security posture by implementing OAuth2/OIDC SSO through Okta/Azure AD, centralized secrets in
+Azure Key Vault, and formalizing audit logging and GDPR/CCPA-aligned data retention, helping the team pass
+multiple enterprise security reviews with zero high-severity findings.
+• Built and maintained an automated testing stack using Jest, React Testing Library, Cypress, Playwright, Postman,
+and xUnit, lifting coverage on critical APIs and UI flows to around 70–75% and reducing P1 production regressions
+quarter-over-quarter.
+• Established platform observability with Application Insights, Prometheus, and Grafana, creating dashboards and
+SLO/error-budget alerts that cut time-to-detect issues by ~30% and allowed on-call engineers to resolve many incidents
+before customers noticed.
+• Delivered a React Native mobile companion for field technicians with offline-first data and secure OIDC auth, replacing
+manual paper workflows and reducing data entry errors by an estimated 20% while giving operations near real-time
+visibility into jobs.
+• Practiced DDD, SOLID, and ADRs across cross-functional squads, mentoring 4–5 engineers on story slicing, technical
+design, and code review practices, which shortened ramp-up time for new team members and improved consistency
+across services and UIs.
+HCLTech • Hybrid (California, United States) • 03/2018 - 09/2020
+Full Stack Developer
+• Built enterprise SPAs with React, Angular, and Vue in TypeScript, using Redux, RxJS, and D3.js for data-rich
+dashboards that allowed business users to make decisions from real-time metrics Instead of static reports, cutting
+some manual reporting cycles from days to same-day self-service.
+• Implemented backend APIs in ASP.NET Core and Node.js (Express, NestJS) with Entity Framework Core on
+SQL Server/PostgreSQL/MySQL, tuning hotspots to keep p95 latency under 200ms on critical endpoints even
+under peak traffic.
+• Used Python (Flask, FastAPI) to stand up migration tooling and service prototypes, allowing teams to validate
+API designs with clients in days and reducing rework during integration phases by roughly one quarter.
+• Designed event-driven workflows with Kafka and RabbitMQ, defining schemas, idempotency, and retry patterns
+that supported tens of thousands of daily events and kept failed-message rates consistently below 1%.
+• Delivered multi-cloud solutions across Azure, AWS (ECS, EKS, CloudWatch), and GCP (GKE, Pub/Sub),
+containerizing services with Docker and running them on Kubernetes/Helm, which unlocked multi-region
+availability and helped several clients reduce infrastructure costs by 15–25% through autoscaling and right-sizing.
+• Created Jenkins and later GitHub Actions pipelines with security and quality gates via Snyk and SonarQube,
+plus Terraform for infrastructure as code, moving clients from quarterly or ad-hoc releases to predictable weeklyor biweekly releases with lower change failure rates.
+• Migrated selected applications from Webpack to Vite, employing code splitting, tree shaking, and bundle
+analysis to shrink JS payloads and push Lighthouse performance scores up by 20–30 points on high-traffic pages.
+• Integrated third-party platforms such as Stripe, Twilio, SendGrid, Salesforce, and S3/CloudFront, enabling
+clients to process thousands of secure transactions and notifications per month while maintaining high
+deliverability and low error rates.
+• Expanded testing from unit-only to a layered strategy using Jest, React Testing Library, Cypress, Playwright,
+and Postman collections, catching defects earlier and reducing production P1 incidents by an estimated 15–20%.
+• Mentored junior and mid-level developers, led design reviews grounded in Design Systems, DDD, and SOLID,
+and partnered with product/architecture stakeholders to align roadmaps, which improved delivery predictability
+across multiple concurrent projects.`;
 
 function App() {
   const [tabs, setTabs] = useState<Tab[]>([
@@ -160,7 +164,7 @@ function App() {
     const savedApiSettings = localStorage.getItem('apiSettings');
     const savedPdfSettings = localStorage.getItem('pdfSettings');
     const savedHistory = localStorage.getItem('history');
-    
+
     if (savedApiSettings) {
       setApiSettings(JSON.parse(savedApiSettings));
     }
@@ -242,32 +246,32 @@ function App() {
   const closeTab = useCallback((tabId: string) => {
     setTabs(prevTabs => {
       if (prevTabs.length === 1) return prevTabs;
-      
+
       const tabIndex = prevTabs.findIndex(t => t.id === tabId);
       const newTabs = prevTabs.filter(t => t.id !== tabId);
-      
+
       if (activeTabId === tabId) {
         const newActiveIndex = Math.max(0, tabIndex - 1);
         setActiveTabId(newTabs[newActiveIndex].id);
       }
-      
+
       return newTabs;
     });
   }, [activeTabId]);
 
   const updateTab = useCallback((tabId: string, updates: Partial<Tab>) => {
-    setTabs(prevTabs => prevTabs.map(tab => 
+    setTabs(prevTabs => prevTabs.map(tab =>
       tab.id === tabId ? { ...tab, ...updates } : tab
     ));
   }, []);
 
   const tailorResume = useCallback(async (tab: Tab) => {
     if (!tab.baseResume || !tab.jobDescription) return;
-    
+
     const tabId = tab.id;
     const tabName = tab.name;
-    
-    setTabs(prevTabs => prevTabs.map(t => 
+
+    setTabs(prevTabs => prevTabs.map(t =>
       t.id === tabId ? { ...t, isGenerating: true, tailoredResume: '' } : t
     ));
 
@@ -279,11 +283,11 @@ function App() {
         apiSettings.model,
         apiSettings.apiUrl
       );
-      
-      setTabs(prevTabs => prevTabs.map(t => 
-        t.id === tabId ? { 
+
+      setTabs(prevTabs => prevTabs.map(t =>
+        t.id === tabId ? {
           ...t,
-          tailoredResume: result.resume, 
+          tailoredResume: result.resume,
           isGenerating: false,
           name: result.company || tabName
         } : t
@@ -303,7 +307,7 @@ function App() {
 
     } catch (error) {
       console.error('Error tailoring resume:', error);
-      setTabs(prevTabs => prevTabs.map(t => 
+      setTabs(prevTabs => prevTabs.map(t =>
         t.id === tabId ? { ...t, isGenerating: false } : t
       ));
       const errorMessage = error instanceof Error ? error.message : 'Failed to tailor resume. Please check your API settings and try again.';
@@ -312,12 +316,12 @@ function App() {
   }, [apiSettings.apiKey, apiSettings.model, apiSettings.apiUrl]);
 
   const handleDownloadPDF = useCallback((tab: Tab) => {
-    const event = new CustomEvent('download-pdf', { 
-      detail: { 
-        content: tab.tailoredResume, 
+    const event = new CustomEvent('download-pdf', {
+      detail: {
+        content: tab.tailoredResume,
         filename: `${tab.name}_Resume.pdf`,
         settings: pdfSettings
-      } 
+      }
     });
     window.dispatchEvent(event);
   }, [pdfSettings]);
@@ -337,7 +341,7 @@ function App() {
           <FileText className="w-6 h-6 text-blue-500" />
           <h1 className="text-xl font-semibold text-white">AI Resume Tailor</h1>
         </div>
-        
+
         <div className="flex items-center gap-4">
           <button
             onClick={() => setShowShortcuts(true)}
@@ -346,14 +350,14 @@ function App() {
             <Keyboard className="w-4 h-4" />
             <span className="text-sm">Shortcuts</span>
           </button>
-          
+
           <button
             className="flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-hover rounded transition-colors"
           >
             <Tag className="w-4 h-4" />
             <span className="text-sm">Keywords</span>
           </button>
-          
+
           <button
             onClick={() => setShowHistory(true)}
             className="flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-hover rounded transition-colors"
@@ -365,7 +369,7 @@ function App() {
             </span>
           </button>
 
-          <button 
+          <button
             onClick={() => setShowSettings(true)}
             className="flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white hover:bg-dark-hover rounded transition-colors"
           >
@@ -391,7 +395,7 @@ function App() {
               onNewTab={createNewTab}
               onCloseTab={closeTab}
             />
-            
+
             <ResumeTailor
               tab={activeTab}
               onUpdateTab={updateTab}
@@ -406,7 +410,7 @@ function App() {
             <div className="flex-shrink-0 mb-4">
               <h2 className="text-lg font-semibold text-white">Tailored Resumes</h2>
             </div>
-            
+
             <div className="flex-1 card p-6 overflow-auto min-h-0">
               {activeTab.isGenerating ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-400">

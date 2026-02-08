@@ -36,7 +36,7 @@ You MUST follow this exact structure and formatting pattern in this EXACT ORDER:
 [Company Name] | [Start Date] – [End Date]
 - **[Action verb]** [achievement with **bold technical terms** and quantified results]
 - **[Action verb]** [achievement with **bold technical terms** and quantified results]
-- [Continue for 7-10 bullet points per role, each with **bold technical terms**]
+- [Continue for 10-15 bullet points per role, each with **bold technical terms**]
 
 **[Previous Job Title]**
 [Previous Company Name] | [Start Date] – [End Date]
@@ -178,7 +178,7 @@ CRITICAL STRUCTURE REQUIREMENTS:
 2. SECTION ORDER MUST BE: Summary → Skills → Experience → Education → Certifications (if available)
 3. Contact Information: Format as "email | phone | [LinkedIn](url) | City, State"
 4. Skills: Group by categories with **bold category names ONLY** (e.g., "**Frontend Technologies:** React, Node.js, Angular") - DO NOT bold individual skills
-5. Experience: Generate EXACTLY 7-10 achievement bullet points per role with **bold technical terms**
+5. Experience: Generate EXACTLY 10-15 achievement bullet points per role with **bold technical terms**
 6. **MANDATORY - REQUIRED SKILLS IN LAST 2 COMPANIES' EXPERIENCE**: 
    - **EVERY required skill/tool/technology from the JD MUST appear in the Experience section** — listing them only in Skills is NOT enough
    - **For my LAST 2 COMPANIES (most recent 2 roles), you MUST include ALL required skills from the JD** in the achievement bullets
