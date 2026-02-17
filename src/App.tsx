@@ -9,7 +9,7 @@ import { Tab, APISettings, PDFSettings, HistoryItem } from './types';
 import { tailorResume as tailorResumeAPI } from './utils/api';
 
 const DEFAULT_RESUME = `Full Name : Braylon Dunn
-Linkedin URL : https://www.linkedin.com/in/1aa3563a3
+Linkedin URL : https://www.linkedin.com/in/braylon-dunn-1aa3563a3
 Gmail : braylond770@gmail.com
 Phone : +1 (225) 421-0403
 Georgia Location : 7558 Greenup Lane, Ethel, Louisiana 70730
